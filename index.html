@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IZBIKEN MATAHARI ABADI</title>
+    <style>
+        /* BASE STYLES */
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFF8E1 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* UTILITY CLASSES (FOR JS MESSAGE) */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #FFFFFF;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            font-size: 1em;
+            pointer-events: none;
+        }
+        .message-box.show {
+            opacity: 1;
+        }
+
+        /* TOP BAR */
+        .top-bar {
+            background-color: #000000;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        /* MODIFIED: Logo sekarang bebas tanpa fixed shape/border-radius */
+        .top-bar .logo {
+            max-height: 40px; /* Batasi tinggi, lebar menyesuaikan proporsi */
+            width: auto;
+            margin-right: 15px;
+            border-radius: 0; /* Hapus sudut membulat */
+            object-fit: contain; /* Pastikan logo terlihat penuh */
+        }
+        .top-bar .title {
+            color: #FF4500;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            position: relative;
+            height: 500px;
+            background-image: url('photo_izbiken.png'); /* Placeholder for ATAS.jpeg */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 2s ease-in-out;
+            overflow: hidden;
+        }
+
+        /* Hero Layers (Image Uploads) */
+        .hero-image-layer {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 5;
+            aspect-ratio: 16/9;
+        }
+        #hero-image-layer-1 {
+            opacity: 0.8;
+        }
+        #hero-image-layer-2 {
+            opacity: 0.5;
+            transform: scale(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column; 
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            gap: 5px;
+        }
+
+        .hero-title {
+            color: #FF4500;
+            font-size: 5em; 
+            text-align: center;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            animation: slideUp 1.5s ease-out;
+            margin: 0;
+            padding: 5px 0 0 0; 
+        }
+
+        .hero-subtitle {
+            color: #FFFFFF;
+            font-size: 1.8em;
+            text-align: center;
+            z-index: 1;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            animation: slideUp 1.8s ease-out; 
+            font-weight: 600;
+            margin: 0;
+            padding: 0 10px 5px 10px; 
+            letter-spacing: 2px;
+        }
+
+        /* KEAHLIAN SECTION STYLES */
+        .skills-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            background-color: #fcfcfc;
+            border-bottom: 1px solid #eee;
+        }
+        .skills-section h2 {
+            color: #FF8C00;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        /* Sub Grid for 3 small cards */
+        .sub-skills-grid { 
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        /* Desktop/Tablet: 3 columns for sub-grid */
+        @media (min-width: 768px) {
+            .sub-skills-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        /* Generic Card Styles */
+        .skill-card {
+            background: #FFFFFF;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+            border: 2px solid #FFA500;
+        }
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        .skill-card h3 {
+            color: #000000;
+            font-size: 1.5em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        .skill-card p {
+            color: #555;
+            font-size: 1em;
+            margin: 0; /* Tambahkan ini agar tidak ada margin ganda */
+        }
+        
+        /* --- STYLES FOR STATIC ICONS (MODIFIED: Square/Box shape, NO BORDER/OUTLINE on any icon) --- */
+        .uploaded-icon {
+            object-fit: contain;
+            border-radius: 8px; /* DARI 50% MENJADI 8PX */
+            transition: transform 0.2s;
+            cursor: default;
+        }
+        .uploaded-icon:hover {
+            transform: scale(1.05); /* Efek zoom tipis saat hover */
+        }
+
+        /* --- STYLES FOR THE LARGE CARD (FULL WIDTH) --- */
+        .main-skill-card {
+            background: linear-gradient(135deg, #FFEFD5 0%, #FFA500 100%);
+            color: #333;
+            border: 3px solid #FF8C00;
+            margin-bottom: 30px;
+            padding: 40px;
+        }
+        .main-skill-card h3 {
+            color: #000000;
+            font-size: 1.8em;
+        }
+        /* Specific style adjustments for main card icon */
+        .main-skill-card .uploaded-icon { 
+            width: 80px;
+            height: 80px;
+            background-color: #FF8C00;
+            /* Border 2px solid #FFFFFF dihapus untuk menghilangkan outline */
+            margin: 0 auto 15px auto;
+            display: block; 
+            /* border-radius inherited as 8px */
+        }
+        
+        .main-skill-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Specific style adjustments for sub card icons */
+        .skill-card:not(.main-skill-card) .uploaded-icon { 
+            width: 60px;
+            height: 60px;
+            background-color: #FFF;
+            margin: 0 auto 15px auto;
+            display: block; 
+            /* border-radius inherited as 8px */
+        }
+        /* END: STYLES FOR STATIC ICONS */
+
+        
+        /* GALLERY SECTION */
+        .gallery {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeInUp 2s ease-out 0.5s both;
+        }
+        /* Mengatur judul Gallery dan Customer Section */
+        .gallery h2, .customer-section h2 {
+            color: #FFA500;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        /* === TATA LETAK GALERI === */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr; 
+            gap: 30px;
+        }
+
+        /* Grid 2 kolom untuk tablet/desktop */
+        @media (min-width: 600px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            /* Galeri 3: Rentang 2 kolom, DIUBAH agar merentang penuh di barisnya */
+            #gallery-item-3 {
+                grid-column: 1 / span 2; /* Rentang kedua kolom */
+                max-width: 50%; /* Mengambil lebar penuh (perbaikan) */
+                width: 50%; 
+                margin: auto; /* Hapus auto margin untuk pemusatan (perbaikan) */
+            }
+        }
+        /* =================================== */
+
+        .gallery-item {
+            text-align: center;
+            background: linear-gradient(145deg, #FFFFFF, #F5F5F5);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            overflow: hidden;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+        
+        .image-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .image-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item p {
+            margin-top: 15px;
+            color: #555;
+            font-size: 1.1em;
+        }
+        
+        /* CUSTOMER CAROUSEL SECTION */
+        .customer-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            background-color: #f7f7f7;
+            padding: 0;
+        }
+
+        .carousel-slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            width: 100%;
+        }
+
+        .carousel-slide {
+            flex: 0 0 100%;
+            width: 100%;
+            background-color: #FFFFFF;
+            padding: 0;
+            text-align: center;
+            box-sizing: border-box;
+            
+            /* 16:9 aspect ratio wrapper for content */
+            position: relative;
+            padding-top: 56.25%; 
+        }
+
+        .slide-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-content img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+            border-radius: 10px;
+        }
+        
+        .carousel-nav button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 165, 0, 0.7);
+            color: white;
+            border: none;
+            /* MODIFIED: Perbesar Tombol Navigasi */
+            padding: 20px 15px;
+            cursor: pointer;
+            z-index: 20;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.3s;
+            font-size: 28px; /* MODIFIED: Ukuran Font Lebih Besar */
+            line-height: 1;
+        }
+
+        .carousel-nav button:hover {
+            background: #FF8C00;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        #prevBtn { left: 15px; }
+        #nextBtn { right: 15px; }
+        
+        /* New Style for text below carousel */
+        .carousel-info {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .carousel-info p {
+            font-size: 1.2em;
+            color: #555;
+            margin: 5px 0;
+            font-weight: 600;
+        }
+
+        /* CONTACT & FOOTER */
+        .contact-notification {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: #FFFFFF;
+            padding: 40px 20px;
+            text-align: center;
+            animation: bounceIn 2s ease-out 1s both;
+        }
+        .contact-notification h3 {
+            margin: 0 0 20px 0;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .contact-notification p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+        footer {
+            background-color: #FFA500;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        /* KEYFRAMES */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes fadeInUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        @keyframes bounceIn { 0% { transform: scale(0.3); opacity: 0; } 50% { transform: scale(1.05); } 70% { transform: scale(0.9); } 100% { transform: scale(1); opacity: 1; } }
+
+        /* RESPONSIVENESS */
+        @media (max-width: 600px) {
+            .hero-title { font-size: 3em; }
+            .hero-subtitle { font-size: 1.2em; letter-spacing: 1px; }
+            .contact-notification h3 { font-size: 1.5em; }
+            .top-bar { font-size: 1.2em; padding: 15px 0; }
+            .top-bar .logo { width: 40px; margin-right: 10px; }
+            /* Tombol Navigasi diperbesar untuk mobile */
+            .carousel-nav button { 
+                padding: 15px 10px; 
+                font-size: 22px; 
+            }
+            .carousel-info p {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="messageBox" class="message-box"></div>
+    <div class="top-bar">
+        <img src="LOGO.png" alt="Logo IZBIKEN" class="logo"> <span class="title">IZBIKEN</span>
+    </div>
+    
+    <div class="hero">
+        <img id="hero-image-layer-2" class="hero-image-layer" 
+             src="photo_izbiken.png" alt="Layer Belakang 2">
+        <img id="hero-image-layer-1" class="hero-image-layer" 
+             src="photo_izbiken.png" alt="Layer Belakang 1">
+        <img id="hero-image-layer-1" class="hero-image-layer" 
+             src="overlay_logo.png" alt="Layer Belakang 1">
+        <div class="hero-overlay">
+            <h1 class="hero-title">IZBIKEN</h1>
+            <p class="hero-subtitle">MATAHARI ABADI</p>
+        </div>
+    </div>
+
+    <section class="skills-section">
+        <h2>Specialist</h2>
+        
+        <div class="skill-card main-skill-card">
+            <img id="mainIcon" 
+                src="icon_core.png" 
+                alt="Main Icon" 
+                class="uploaded-icon main-icon-area">
+            <h3>Core Services</h3>
+            <p>Repair and Overhaul of Machines, examples include: Brother Machine, Fanuc Machine, Bending Machine, Daihen Welding Robot, Panasonic Welding Machine, Comco Bending, Mitsubishi Motor, Production Motor, Washing Machine, Numbering Machine, Press Machine, Chiller, Conveyor - and other production machines..</p>
+        </div>
+
+        <div class="sub-skills-grid">
+            
+            <div class="skill-card">
+                <img id="planningIcon" 
+                    src="Equipment_icon.png" 
+                    alt="Planning Icon" 
+                    class="uploaded-icon">
+                <h3>Equipment</h3>
+                <p>Office and industrial machinery, spare parts and equipment.</p>
+            </div>
+
+            <div class="skill-card">
+                <img id="designIcon" 
+                    src="service_icon.png" 
+                    alt="Design Icon" 
+                    class="uploaded-icon">
+                <h3>Installation Services</h3>
+                <p>Industrial machinery and equipment installation.</p>
+            </div>
+
+            <div class="skill-card">
+                <img id="executionIcon" 
+                    src="tool_icon.png" 
+                    alt="Execution Icon" 
+                    class="uploaded-icon">
+                <h3>Tools</h3>
+                <p>Industrial machinery and machine tools for metal working.</p>
+            </div>
+            
+        </div>
+    </section>
+
+    <section class="gallery">
+        <h2>Portfolio</h2>
+        
+        <div class="gallery-grid">
+            
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="G1.jpeg" alt="Foto 1">
+                </div>
+                <p><h2>Installation Services</h2></p>
+            </div>
+            
+            <div class="gallery-item">
+                <div class="image-wrapper">
+                    <img src="G2.jpeg" alt="Foto 2">
+                </div>
+                <p><h2>Installation Services</h2></p>
+            </div>
+            
+            <div class="gallery-item" id="gallery-item-3">
+                <div class="image-wrapper">
+                    <img src="G3.jpeg" alt="Foto 3">
+                </div>
+                <p><h2>Installation Services</h2></p>
+            </div>
+            
+        </div>
+    </section>
+    
+    <section class="customer-section">
+        <h2>Our Customers</h2>
+        <div class="carousel-container">
+            <div class="carousel-slides" id="customerCarousel">
+                
+                <div class="carousel-slide" data-pt="PT. Toyota Motor Manufacturing Indonesia" data-lokasi="jakarta Timur, Indonesia">
+                    <div class="slide-content">
+                        <img src="toyota_sunter.jpeg" alt="Pelanggan 1">
+                    </div>
+                </div>
+                
+                <div class="carousel-slide" data-pt="PT. HIRUTA KOGYO INDONESIA" data-lokasi="Jawa Barat, Indonesia">
+                    <div class="slide-content">
+                        <img src="hiruta.png" alt="Pelanggan 2">
+                    </div>
+                </div>
+
+                <div class="carousel-slide" data-pt="PT. Bintang Timur" data-lokasi="Surabaya, Indonesia">
+                    <div class="slide-content">
+                        <img src="https://placehold.co/600x338/CCCCCC/333333?text=SLIDE+3" alt="Pelanggan 3">
+                    </div>
+                </div>
+
+                <div class="carousel-slide" data-pt="PT. Cipta Karya" data-lokasi="Bandung, Indonesia">
+                    <div class="slide-content">
+                        <img src="https://placehold.co/600x338/CCCCCC/333333?text=SLIDE+4" alt="Pelanggan 4">
+                    </div>
+                </div>
+                
+                <div class="carousel-slide" data-pt="PT. Global Solusi" data-lokasi="Semarang, Indonesia">
+                    <div class="slide-content">
+                        <img src="https://placehold.co/600x338/CCCCCC/333333?text=SLIDE+5" alt="Pelanggan 5">
+                    </div>
+                </div>
+
+                <div class="carousel-slide" data-pt="PT. Industri Sejahtera" data-lokasi="Yogyakarta, Indonesia">
+                    <div class="slide-content">
+                        <img src="https://placehold.co/600x338/CCCCCC/333333?text=SLIDE+6" alt="Pelanggan 6">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-nav">
+                <button id="prevBtn">&#10094;</button> <button id="nextBtn">&#10095;</button> </div>
+        </div>
+        
+        <div class="carousel-info">
+            <p><strong>Nama PT:</strong> <span id="infoPtName">Memuat...</span></p>
+            <p><strong>Lokasi:</strong> <span id="infoLocation">Memuat...</span></p>
+        </div>
+        
+    </section>
+    <section class="contact-notification">
+        <h3>Hubungi Kami!</h3>
+        <p><strong>Nama PT:</strong> PT IZBIKEN MATAHARI ABADI</p>
+        <p><strong>Email:</strong><a href="gmail.com">gmail.com</a></p>
+        <p><strong>No HP:</strong> +62 857-1727-4020</p>
+        <p>Kami siap membantu Anda dengan solusi terbaik!</p>
+    </section>
+    
+    <footer>
+        <p><h2>&copy; 2025 PT IZBIKEN MATAHARI ABADI</h2></p>
+    </footer>
+
+    <script>
+        // Utility function to display non-alert messages
+        function showMessage(text) {
+            const msgBox = document.getElementById('messageBox');
+            msgBox.textContent = text;
+            msgBox.classList.add('show');
+            setTimeout(() => {
+                msgBox.classList.remove('show');
+            }, 3000);
+        }
+
+        
+        // --- CUSTOMER CAROUSEL LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('customerCarousel');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const slides = carousel.querySelectorAll('.carousel-slide');
+            const totalSlides = slides.length;
+            let currentSlide = 0;
+            
+            // Mendapatkan elemen untuk Nama PT dan Lokasi
+            const infoPtName = document.getElementById('infoPtName');
+            const infoLocation = document.getElementById('infoLocation');
+
+
+            if (totalSlides === 0) return;
+
+            // Function to update the carousel position AND the info text
+            function updateCarousel() {
+                const offset = -currentSlide * 100; // Move by 100% of the container width
+                carousel.style.transform = `translateX(${offset}%)`;
+                
+                // Update Info Text
+                const currentSlideElement = slides[currentSlide];
+                // Memastikan data-pt dan data-lokasi diambil.
+                const ptName = currentSlideElement.getAttribute('data-pt') || 'Tidak Diketahui';
+                const location = currentSlideElement.getAttribute('data-lokasi') || 'Tidak Diketahui';
+
+                infoPtName.textContent = ptName;
+                infoLocation.textContent = location;
+            }
+
+            // Next button handler
+            nextBtn.addEventListener('click', () => {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                updateCarousel();
+                // showMessage(`Slide berikutnya. Sekarang: ${currentSlide + 1}/${totalSlides}`);
+            });
+
+            // Previous button handler
+            prevBtn.addEventListener('click', () => {
+                // If at the start (0), wrap around to the last slide
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                updateCarousel();
+                // showMessage(`Slide sebelumnya. Sekarang: ${currentSlide + 1}/${totalSlides}`);
+            });
+
+            // Initial setup: Call updateCarousel on load to set the initial info text
+            updateCarousel();
+
+        });
+    </script>
+</body>
+</html>
