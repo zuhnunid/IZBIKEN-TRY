@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - PT IZBIKEN MATAHARI ABADI</title>
+
+    <link rel="icon" type="image/x-icon" href="LOGO.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==================== BASE STYLES & FONT ==================== */
+        body {
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Latar Belakang Putih Murni */
+            background-color: #FFFFFF;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* ==================== TOP BAR & HEADER ==================== */
+        .top-bar {
+            background-color: #000000;
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 0;
+            font-size: 1.5em;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+        .top-bar .logo {
+            max-height: 40px; 
+            margin-right: 15px;
+            object-fit: contain;
+        }
+        .top-bar .title {
+            color: #FF8C00; /* ORANYE */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            position: relative;
+            height: 350px; 
+            background-color: #000;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        /* === PERBAIKAN START === */
+        .hero-image-layer {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            /* Hapus transisi dan properti yang membelah gambar */
+        }
+        /* Hapus semua id/class spesifik untuk membelah layer */
+        /* === PERBAIKAN END === */
+
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background-color: rgba(0, 0, 0, 0.6); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10;
+        }
+        .hero-title {
+            color: #FF8C00; /* ORANYE */
+            font-size: 4em; text-align: center; text-shadow: 2px 2px 4px rgba(0,0,0,0.7); margin: 0;
+        }
+        .hero-subtitle {
+            color: #FFFFFF; font-size: 1.5em; text-align: center; text-shadow: 1px 1px 2px rgba(0,0,0,0.7); font-weight: 600; margin: 5px 0 20px 0; letter-spacing: 2px;
+        }
+        .hero-btn {
+            background-color: #FF8C00; /* ORANYE */
+            color: #FFFFFF; border: 2px solid #FFFFFF; padding: 10px 25px; border-radius: 5px; text-decoration: none; font-size: 1.1em; font-weight: bold; transition: background-color 0.3s ease, transform 0.3s ease; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        .hero-btn:hover {
+            /* Perubahan Warna: #FFA500 -> #FF8C00 */
+            background-color: #FF8C00; 
+            transform: translateY(-3px); border-color: #FFFFFF;
+        }
+
+        /* ==================== CONTENT STYLES ==================== */
+        .main-content-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* Judul Utama */
+        .section-title {
+            color: #FF8C00; /* ORANYE */
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            border-bottom: 3px solid #FF8C00; /* ORANYE */
+            padding-bottom: 10px;
+        }
+
+        /* Sub Judul */
+        .section-subtitle {
+            color: #333;
+            text-align: center;
+            font-size: 1.8em;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #FF8C00; /* ORANYE */
+        }
+        
+        /* Sub Judul yang Ditingkatkan (20%) */
+        .large-subtitle {
+            font-size: 2.16em;
+        }
+        
+        /* Gaya Utility Baru untuk teks yang sebelumnya menggunakan inline style */
+        .center-text {
+            text-align: center;
+        }
+        .orange-bold-text {
+            color: #ff8c00; 
+            font-weight: 600;
+        }
+
+        /* Gaya Kartu/Grid */
+        .card-grid {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto 30px;
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px;
+            text-align: left;
+            border: none; /* Pastikan tidak ada border aneh */
+        }
+        .card-grid li {
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.1);
+            transition: transform 0.3s ease;
+            font-size: 1em;
+            color: #333;
+            border-top: 5px solid #FF8C00; /* ORANYE */
+            line-height: 1.5;
+        }
+        .card-grid li:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(255, 140, 0, 0.3);
+        }
+        
+        /* Kelas baru untuk list dengan kolom yang lebih kecil */
+        .smaller-grid {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+        }
+        
+        /* Gaya Visi (Kotak Menonjol) */
+        .visi-box {
+            text-align: center; 
+            font-weight: bold; 
+            background-color: #FF8C00; /* ORANYE */
+            color: #FFFFFF; 
+            padding: 15px; 
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            margin-bottom: 40px;
+        }
+
+        /* GALERI PRODUK */
+        .gallery-section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .product-gallery {
+            display: flex;
+            flex-wrap: wrap; 
+            justify-content: center; /* CENTERING ITEM */
+            gap: 20px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+        .product-item {
+            width: 280px;
+            text-align: center;
+            background-color: #FFFFFF;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #FF8C00; /* ORANYE */
+            transition: transform 0.3s ease;
+        }
+        .product-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.4);
+        }
+        .product-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+        .product-caption {
+            background-color: #FF8C00; /* ORANYE */
+            color: #FFFFFF;
+            padding: 10px 5px;
+            font-weight: bold;
+            font-size: 1em;
+            text-transform: uppercase;
+        }
+        
+        /* Gaya Legalitas */
+        .legal-info {
+            max-width: 500px;
+            margin: 30px auto;
+            padding: 20px;
+            border: 1px solid #FF8C00; /* ORANYE */
+            border-radius: 10px;
+            background-color: #FFF8E1; 
+            text-align: left;
+        }
+        .legal-info h4 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 1px solid #FF8C00; 
+            padding-bottom: 5px;
+        }
+        .legal-info p {
+            margin: 8px 0; 
+            padding-left: 10px; 
+            line-height: 1.4;
+        }
+        .legal-info strong {
+            color: #FF8C00; /* ORANYE */
+            display: inline-block;
+            width: 140px; 
+        }
+
+        /* CONTACT & FOOTER */
+        .contact-notification {
+            /* Perubahan Warna: #FFA500 -> #FF8C00 */
+            background: linear-gradient(135deg, #FF8C00, #FF8C00); 
+            color: #FFFFFF;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+        .contact-notification h3 {
+            color: #FFFFFF;
+            margin: 0 0 20px 0;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .contact-notification p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+        
+        /* CONTACT & FOOTER */
+        .contact-notification {
+            background: linear-gradient(135deg, #FFA500, #FF8C00);
+            color: #FFFFFF;
+            padding: 40px 20px;
+            text-align: center;
+            animation: bounceIn 2s ease-out 1s both;
+        }
+        .contact-notification h3 {
+            margin: 0 0 20px 0;
+            font-size: 2em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        .contact-notification p {
+            margin: 10px 0;
+            font-size: 1.2em;
+        }
+        footer {
+            background-color: #FFA500;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="top-bar">
+        <img src="LOGO.png" alt="Logo IZBIKEN" class="logo"> <span class="title">IZBIKEN</span>
+    </div>
+    
+    <div class="hero" id="top">
+                <img class="hero-image-layer" 
+            src="photo_izbiken.png" alt="Foto Latar Belakang About Us">
+        <div class="hero-overlay">
+            <h1 class="hero-title">About Us</h1>
+            <p class="hero-subtitle">PT. IZBIKEN MATAHARI ABADI</p>
+            
+            <div class="hero-actions">
+                <a href="index.html" class="hero-btn">Back</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content-wrapper">
+
+        <h2 class="section-title">Profil Perusahaan</h2>
+        <p class="center-text">
+            Our company is engaged in giving engine services especially for manufacturing. We are also distributor of maintenances, repair and operational supplies for every aspect of your business.
+
+        </p>
+        
+        <div class="legal-info">
+            <h4>Company Legality</h4>
+            <p><strong>NIB: </strong> 2107220067004</p>
+            <p><strong>SK KEMENKUMHAM: </strong> AHU0048835.AH.01.01. TAHUN 2022</p>
+            <p><strong>NPWP : </strong> 60.366.744.5-408.000</p>
+        </div>
+
+        
+        <h3 class="section-subtitle">Our Vision</h3>
+        <div class="visi-box">
+            Improve And Optimize Engine Performance.
+        </div>
+        
+        <h3 class="section-subtitle">Our Mission</h3>
+        <ul class="card-grid">
+            <li>Regular Check Service</li>
+            <li>Repair Service for The Greatest Engine Performance</li>
+            <li>Best Solution for Machine</li>
+        </ul>
+        
+        <h3 class="section-subtitle large-subtitle">Service Specialist</h3>
+        
+       <p class="center-text orange-bold-text">We are experts in <strong>Repair and Overhaul</strong> of various production machines:</p>
+
+         <ul class="card-grid">
+            <li>Brother Machine, Fanuc Machine, Bending Machine, and Bending Comco</li>
+            <li>Daihen Welding Robot, Panasonic Welding Machine, Mitsubishi Motor, Production Motor</li>
+            <li>Washing Machine, Numbering Machine, Press Machine, Chiller, and Conveyor-production</li>
+            <li>Installation of industrial machinery and equipment</li>
+            <li>Office and industrial machinery, spare parts and equipment</li>
+             <li>Industrial machinery and machine tools for metal working</li>
+         </ul>
+        
+        <h3 class="section-subtitle">Service Type & General Trading</h3>
+        <ul class="card-grid smaller-grid">
+            <li><strong>Tipe Service:</strong> Preventive, Repair, Overhaul, Improvement</li>
+            <li><strong>General Trading:</strong> Office Supply, Safety Good, Consumable, Spare Part Machine</li>
+        </ul>
+        
+    </div>
+
+    <section class="gallery-section">
+        <h2 class="section-title">Featured product</h2>
+        <div class="product-gallery">
+            
+            <div class="product-item">
+                <img src="robot_daihen.png" alt="Robot Daihen">
+                <div class="product-caption">ROBOT DAIHEN (FD-V210)</div>
+            </div>
+            
+            <div class="product-item">
+                <img src="mesin_las_tig.png" alt="Mesin Las TIG">
+                <div class="product-caption">MESIN LAS TIG (PANA-TIG TOP 300)</div>
+            </div>
+            
+            <div class="product-item">
+                <img src="bending_machine_comco.png" alt="Bending Machine Comco">
+                <div class="product-caption">BENDING MACHINE COMCO</div>
+            </div>
+            
+            <div class="product-item">
+                <img src="mesin_las_panasonic.png" alt="Mesin Las Panasonic">
+                <div class="product-caption">MESIN LAS PANASONIC (KR1200)</div>
+            </div>
+            
+            <div class="product-item">
+                <img src="upgrade_plc_mitsubishi.png" alt="Upgrade PLC Mitsubishi">
+                <div class="product-caption">UPGRADE PLC MITSUBISHI</div>
+            </div>
+            
+            <div class="product-item">
+                <img src="motor_servo.png" alt="Motor Servo">
+                <div class="product-caption">MOTOR SERVO / REPAIR MOTOR INDUSTRI</div>
+            </div>
+            
+        </div>
+    </section>
+    
+    <section class="contact-notification">
+    <h3>Contact Us</h3>
+    <p><strong>PT Name:</strong> PT IZBIKEN MATAHARI ABADI</p>
+    <p><strong>Email:</strong> <a href="mailto:Izbikenmatahariabadi@gmail.com">Izbikenmatahariabadi@gmail.com</a></p>
+    <p><strong>Mobile/WhatsApp:</strong> 08561740760</p>
+    <p><strong>Address:</strong> Jl. Purabaya 4 Blok MH 6, Teluk jambe karawang</p>
+    <p>We are ready to assist you with the best solution!</p>
+</section>
+    
+    <footer>
+        <h2>&copy; 2025 PT IZBIKEN MATAHARI ABADI</h2>
+    </footer>
+
+</body>
+</html>
